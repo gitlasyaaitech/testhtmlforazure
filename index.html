@@ -11,6 +11,24 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<script>
+			fetch("/.auth/me")
+			  .then(res => {
+			    if (res.status === 401) {
+			      // Not logged in → redirect to Microsoft login
+			      window.location.href = "/.auth/login/aad";
+			    } else {
+			      return res.json();
+			    }
+			  })
+			  .then(data => {
+			    const user = data[0];
+			    console.log("Logged in as:", user);
+			    // Optional: Show user name/email or check allowed list
+			  });
+		</script>
+
 	</head>
 	<body class="is-preload">
 
@@ -339,6 +357,7 @@
 							</ul>
 							<p>&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 						</div>
+						<a href="/.auth/logout">Logout</a>
 					</footer>
 
 			</div>
